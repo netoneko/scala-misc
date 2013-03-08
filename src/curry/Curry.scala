@@ -7,4 +7,8 @@ object Curry extends App {
   }
 
   assert(product(x => x * x)(3, 7) == 6350400)
+
+  def factorial(n: Int) = product(x => x)(1, n)
+
+  assert(factorial(4) == 24)
 }
