@@ -1,8 +1,13 @@
 package factorial
 
 object Factorial extends App {
-  def factorial(i: Integer): Integer =
-    if (i == 0) 1 else i * factorial(i - 1)
+  def factorial(n: BigDecimal): BigDecimal = {
+    def loop(acc: BigDecimal, n: BigDecimal): BigDecimal =
+      if (n == 0) acc else loop(acc * n, n - 1)
 
+    loop(1, n)
+  }
+
+  println(factorial(10000))
   assert(factorial(4) == 24)
 }
