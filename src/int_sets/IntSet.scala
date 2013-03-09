@@ -20,18 +20,22 @@ class NonEmpty(v: Int, leftSet: IntSet, rightSet: IntSet) extends IntSet {
   var left = leftSet
   var right = rightSet
 
-  def contains(x: Int):Boolean = if (this.value == x) true else left.contains(x) || right.contains(x)
+  def contains(x: Int):Boolean = {
+    if (this.value == x) true
+    else if (this.value > x) left.contains(x)
+    else left.contains(x)
+  }
 
   def incl(x: Int):IntSet = {
     if (this.contains(x)) this
     else {
-      if (x > this.value) {
-        if (right.isInstanceOf[Empty]) { right = new NonEmpty(x); right }
-        else right.incl(x)
-      } else {
-        if (left.isInstanceOf[Empty]) { left = new NonEmpty(x); left }
-        else left.incl(x)
+      def setLeaf(leaf: IntSet, assign: (IntSet) => Unit) = {
+        if (leaf.isInstanceOf[Empty]) { assign(new NonEmpty(x)); leaf }
+        else leaf.incl(x)
       }
+
+      if (x > this.value) setLeaf(this.right, (leaf) => this.right = leaf)
+      else setLeaf(this.left, (leaf) => this.left = leaf)
     }
   }
 
