@@ -52,11 +52,7 @@ object Test extends App {
 
   assert(!set.contains(99))
 
-  set.incl(99)
-  set.incl(77)
-  set.incl(12)
-  set.incl(3)
-
+  Array(99, 77, 3, 12).foreach(x => set.incl(x))
 
   println(set)
 }
