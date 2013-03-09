@@ -12,8 +12,16 @@ case class Rational(x: Int, y: Int) {
     new Rational(numer * x.denom - x.numer * denom, denom * x.denom)
   }
 
+  def *(x: Rational) = {
+    new Rational(numer * x.numer, denom * x.denom)
+  }
+
+  def /(x: Rational) = {
+    new Rational(numer * x.denom, denom * x.numer)
+  }
+
   def ==(x: Rational) = {
-    numer == x.numer && denom == x.denom
+    numer * x.denom == x.numer * denom
   }
 
   override def toString() = s"$numer/$denom"
@@ -31,6 +39,8 @@ object Test extends App {
 
   assert(Rational(3, 4) + Rational(2, 3) == Rational(9 + 8, 12))
   assert(Rational(3, 4) - Rational(2, 3) == Rational(9 - 8, 12))
+  assert(Rational(3, 4) * Rational(2, 3) == Rational(6, 12))
+  assert(Rational(3, 4) / Rational(2, 3) == Rational(9, 8))
 
   assert(Rational(3, 4) == Rational(6, 8))
 }
