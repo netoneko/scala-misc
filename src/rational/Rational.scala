@@ -24,6 +24,10 @@ case class Rational(x: Int, y: Int) {
     numer * x.denom == x.numer * denom
   }
 
+  def neg() = {
+    new Rational(-numer, denom)
+  }
+
   override def toString() = s"$numer/$denom"
 
   private def gcd(a: Int, b: Int): Int = {
@@ -41,6 +45,7 @@ object Test extends App {
   assert(Rational(3, 4) - Rational(2, 3) == Rational(9 - 8, 12))
   assert(Rational(3, 4) * Rational(2, 3) == Rational(6, 12))
   assert(Rational(3, 4) / Rational(2, 3) == Rational(9, 8))
+  assert(Rational(3, 4).neg() == Rational(-3, 4))
 
   assert(Rational(3, 4) == Rational(6, 8))
 }
