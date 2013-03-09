@@ -1,10 +1,15 @@
 package rational
 
 case class Rational(x: Int, y: Int) {
+  require(y != 0, "Denominator must be non-zero")
+
+  def this(x: Int) = this(x, 1)
+
   private val divisor = gcd(x, y)
 
   val numer = x / divisor
   val denom = y / divisor
+
 
   def +(x: Rational) = new Rational(numer * x.denom + x.numer * denom, denom * x.denom)
 
@@ -36,8 +41,14 @@ case class Rational(x: Int, y: Int) {
   }
 }
 
+object Rational {
+  def apply(x: Int) = new Rational(x)
+}
+
 object Test extends App {
   assert(Rational(4, 6).toString() == "2/3")
+  assert(Rational(7).toString() == "7/1")
+
   assert(Rational(2, 3) == Rational(1, 3) == false)
 
   assert(Rational(3, 4) + Rational(2, 3) == Rational(9 + 8, 12))
