@@ -29,8 +29,8 @@ case class Rational(x: Int, y: Int) {
   }
 
   override def toString() = {
-    val divider = gcd(numer, denom)
-    (numer / divider) + "/" + (denom / divider)
+    val divisor = gcd(numer, denom)
+    (numer / divisor) + "/" + (denom / divisor)
   }
 
   private def gcd(a: Int, b: Int): Int = {
