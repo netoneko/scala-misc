@@ -28,11 +28,20 @@ case class Rational(x: Int, y: Int) {
     new Rational(-numer, denom)
   }
 
-  override def toString() = s"$numer/$denom"
+  override def toString() = {
+    val divider = gcd(numer, denom)
+    (numer / divider) + "/" + (denom / divider)
+  }
+
+  private def gcd(a: Int, b: Int): Int = {
+    if (a == b) a
+    else if (a > b) gcd(a - b, a)
+    else gcd(a, b - a)
+  }
 }
 
 object Test extends App {
-  assert(Rational(2, 3).toString() == "2/3")
+  assert(Rational(4, 6).toString() == "2/3")
   assert(Rational(2, 3) == Rational(1, 3) == false)
 
   assert(Rational(3, 4) + Rational(2, 3) == Rational(9 + 8, 12))
