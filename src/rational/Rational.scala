@@ -1,8 +1,10 @@
 package rational
 
 case class Rational(x: Int, y: Int) {
-  val numer = x
-  val denom = y
+  private val divisor = gcd(x, y)
+
+  val numer = x / divisor
+  val denom = y / divisor
 
   def +(x: Rational) = {
     new Rational(numer * x.denom + x.numer * denom, denom * x.denom)
@@ -28,15 +30,11 @@ case class Rational(x: Int, y: Int) {
     new Rational(-numer, denom)
   }
 
-  override def toString() = {
-    val divisor = gcd(numer, denom)
-    (numer / divisor) + "/" + (denom / divisor)
-  }
+  override def toString() = s"$numer/$denom"
 
   private def gcd(a: Int, b: Int): Int = {
-    if (a == b) a
-    else if (a > b) gcd(a - b, a)
-    else gcd(a, b - a)
+    if (b == 0) a
+    else gcd(b, a % b)
   }
 }
 
