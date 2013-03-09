@@ -54,4 +54,5 @@ object Test extends App {
   assert(Rational(3, 4) < Rational(7, 8))
   assert(Rational(3, 4) <= Rational(7, 8) && Rational(1, 2) <= Rational(1, 2))
 
+  assert(Rational(-1, 2) > Rational(-2, 3))
 }
