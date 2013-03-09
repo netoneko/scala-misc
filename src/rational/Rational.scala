@@ -1,15 +1,15 @@
 package rational
 
 case class Rational(x: Int, y: Int) {
-  val numer = x / gcd(x, y)
-  val denom = y / gcd(x, y)
+  val numer = x
+  val denom = y
 
   def +(x: Rational) = {
     new Rational(numer * x.denom + x.numer * denom, denom * x.denom)
   }
 
   def -(x: Rational) = {
-    new Rational(numer * x.denom - x.numer * denom, denom * x.denom)
+    this + x.neg()
   }
 
   def *(x: Rational) = {
@@ -17,7 +17,7 @@ case class Rational(x: Int, y: Int) {
   }
 
   def /(x: Rational) = {
-    new Rational(numer * x.denom, denom * x.numer)
+    this * Rational(x.denom, x.numer)
   }
 
   def ==(x: Rational) = {
@@ -29,12 +29,6 @@ case class Rational(x: Int, y: Int) {
   }
 
   override def toString() = s"$numer/$denom"
-
-  private def gcd(a: Int, b: Int): Int = {
-    if (a == b) a
-    else if (a > b) gcd(a - b, a)
-    else gcd(a, b - a)
-  }
 }
 
 object Test extends App {
