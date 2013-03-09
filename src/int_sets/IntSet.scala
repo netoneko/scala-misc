@@ -22,7 +22,7 @@ class NonEmpty(v: Int, leftSet: IntSet, rightSet: IntSet) extends IntSet {
 
   def contains(x: Int):Boolean = {
     if (this.value == x) true
-    else if (this.value > x) left.contains(x)
+    else if (x > this.value) right.contains(x)
     else left.contains(x)
   }
 
@@ -53,7 +53,7 @@ object Test extends App {
   set.incl(4)
   set.incl(1)
 
-  assert(set contains 2)
+  assert(set contains 4)
   assert(set contains 1)
 
   assert(!set.contains(99))
