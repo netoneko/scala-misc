@@ -5,16 +5,16 @@ abstract class IntSet {
   def contains(x: Int): Boolean
 }
 
-class Empty extends IntSet {
+object Empty extends IntSet {
   def incl(x: Int): IntSet = new NonEmpty(x)
 
   def contains(x: Int):Boolean = false
 
-  override def toString() = ""
+  override def toString() = "."
 }
 
 class NonEmpty(v: Int, leftSet: IntSet, rightSet: IntSet) extends IntSet {
-  def this(v: Int) = this(v, new Empty, new Empty)
+  def this(v: Int) = this(v, Empty, Empty)
 
   val value = v
   var left = leftSet
@@ -30,7 +30,7 @@ class NonEmpty(v: Int, leftSet: IntSet, rightSet: IntSet) extends IntSet {
     if (this.contains(x)) this
     else {
       def setLeaf(leaf: IntSet, assign: (IntSet) => Unit) = {
-        if (leaf.isInstanceOf[Empty]) {
+        if (leaf == Empty) {
           val newLeaf = new NonEmpty(x)
           assign(newLeaf)
           newLeaf
@@ -43,9 +43,7 @@ class NonEmpty(v: Int, leftSet: IntSet, rightSet: IntSet) extends IntSet {
     }
   }
 
-  override def toString() = {
-    s"$value[${left}][${right}]"
-  }
+  override def toString() = s"{${left}$value${right}}"
 }
 
 object Test extends App {
