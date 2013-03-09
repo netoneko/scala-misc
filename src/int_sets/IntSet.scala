@@ -30,7 +30,11 @@ class NonEmpty(v: Int, leftSet: IntSet, rightSet: IntSet) extends IntSet {
     if (this.contains(x)) this
     else {
       def setLeaf(leaf: IntSet, assign: (IntSet) => Unit) = {
-        if (leaf.isInstanceOf[Empty]) { assign(new NonEmpty(x)); leaf }
+        if (leaf.isInstanceOf[Empty]) {
+          val newLeaf = new NonEmpty(x)
+          assign(newLeaf)
+          newLeaf
+        }
         else leaf.incl(x)
       }
 
@@ -57,6 +61,7 @@ object Test extends App {
   assert(!set.contains(99))
 
   Array(99, 77, 3, 12).foreach(x => set.incl(x))
-
   println(set)
+
+  assert(set.incl(200).asInstanceOf[NonEmpty].value == 200)
 }
