@@ -1,8 +1,8 @@
 package rational
 
 case class Rational(x: Int, y: Int) {
-  val numer = x
-  val denom = y
+  val numer = x / gcd(x, y)
+  val denom = y / gcd(x, y)
 
   def +(x: Rational) = {
     new Rational(numer * x.denom + x.numer * denom, denom * x.denom)
@@ -17,6 +17,12 @@ case class Rational(x: Int, y: Int) {
   }
 
   override def toString() = s"$numer/$denom"
+
+  private def gcd(a: Int, b: Int): Int = {
+    if (a == b) a
+    else if (a > b) gcd(a - b, a)
+    else gcd(a, b - a)
+  }
 }
 
 object Test extends App {
@@ -26,4 +32,5 @@ object Test extends App {
   assert(Rational(3, 4) + Rational(2, 3) == Rational(9 + 8, 12))
   assert(Rational(3, 4) - Rational(2, 3) == Rational(9 - 8, 12))
 
+  assert(Rational(3, 4) == Rational(6, 8))
 }
