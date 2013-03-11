@@ -23,7 +23,10 @@ class ConstantList[T](val head: T, val tail: List[T]) extends List[T] {
 
   def nth(x: Int): T = {
     def iterate(list: List[T], n: Int): T = {
-      if (n != x) iterate(list.tail, n - 1) else list.head
+      if (n != x) {
+        iterate(list.tail, n + 1)
+      }
+      else list.head
     }
 
     iterate(this, 0)
@@ -34,4 +37,6 @@ object Polymorphism extends App {
   val list = new ConstantList[Int](3, new ConstantList[Int](4, new ConstantList[Int](7, new Nil[Int])))
 
   assert(list.nth(0) == 3)
+  assert(list.nth(1) == 4)
+  assert(list.nth(2) == 7)
 }
