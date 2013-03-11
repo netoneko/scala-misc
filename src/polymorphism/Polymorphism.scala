@@ -21,16 +21,7 @@ class Nil[T] extends List[T] {
 class ConstantList[T](val head: T, val tail: List[T]) extends List[T] {
   def isEmpty = false
 
-  def nth(x: Int): T = {
-    def iterate(list: List[T], n: Int): T = {
-      if (n != x) {
-        iterate(list.tail, n + 1)
-      }
-      else list.head
-    }
-
-    iterate(this, 0)
-  }
+  def nth(x: Int): T = if (x != 0) tail.nth(x - 1) else head
 }
 
 object Polymorphism extends App {
@@ -39,4 +30,7 @@ object Polymorphism extends App {
   assert(list.nth(0) == 3)
   assert(list.nth(1) == 4)
   assert(list.nth(2) == 7)
+
+  try   { list.nth(23) }
+  catch { case e: Exception => assert(e.isInstanceOf[IndexOutOfBoundsException]) }
 }
