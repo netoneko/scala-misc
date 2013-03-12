@@ -24,8 +24,12 @@ class Successor(n: Nat) extends Nat {
   def predecessor = n
   def successor = new Successor(this)
 
-  def + (that: Nat) = new Successor(n + that)
-  def - (that: Nat) = new Successor(n - that)
+  def iterate(step: Nat, result: Nat, f: (Nat) => Nat): Nat = {
+    if (step.isZero) result else iterate(step.successor, f(result), f)
+  }
+
+  def + (that: Nat) = iterate(that, this, (x) => x.successor)
+  def - (that: Nat) = iterate(that, this, (x) => x.predecessor)
 }
 
 class Test extends App {
