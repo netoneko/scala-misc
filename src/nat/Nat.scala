@@ -34,4 +34,11 @@ class Successor(n: Nat) extends Nat {
 
 object Test extends App {
   assert(Zero + Zero == Zero)
+
+  val one = Zero.successor
+  assert(one + Zero == one)
+  assert(one.predecessor == Zero)
+
+//  val two = one + one
+//  assert(two.predecessor == one)
 }
