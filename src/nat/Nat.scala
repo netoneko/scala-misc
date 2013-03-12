@@ -18,11 +18,11 @@ object Zero extends Nat {
   def - (that: Nat) = that
 }
 
-class Successor(val n: Nat) extends Nat {
+class Successor(n: Nat) extends Nat {
   def isZero = false
 
-  def predecessor = new Successor(n - Zero.successor)
-  def successor = new Successor(n + Zero.successor)
+  def predecessor = n
+  def successor = new Successor(this)
 
   def + (that: Nat) = new Successor(n + that)
   def - (that: Nat) = new Successor(n - that)
