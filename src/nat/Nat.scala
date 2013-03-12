@@ -32,6 +32,6 @@ class Successor(n: Nat) extends Nat {
   def - (that: Nat) = iterate(that, this, (x) => x.predecessor)
 }
 
-class Test extends App {
-
+object Test extends App {
+  assert(Zero + Zero == Zero)
 }
