@@ -25,7 +25,7 @@ class Successor(n: Nat) extends Nat {
   def successor = new Successor(this)
 
   def iterate(step: Nat, result: Nat, f: (Nat) => Nat): Nat = {
-    if (step.isZero) result else iterate(step.successor, f(result), f)
+    if (step.isZero) result else iterate(step.predecessor, f(result), f)
   }
 
   def + (that: Nat) = iterate(that, this, (x) => x.successor)
@@ -39,6 +39,10 @@ object Test extends App {
   assert(one + Zero == one)
   assert(one.predecessor == Zero)
 
-//  val two = one + one
-//  assert(two.predecessor == one)
+  val two = one + one
+  assert(two.predecessor == one)
+
+  val three = one + two
+  assert(three.predecessor.predecessor == one)
+  assert(three - two == one)
 }
