@@ -2,7 +2,7 @@ import scala.util.parsing.json._
 
 class GithubApi() {
   case class Commit(val sha: String, val message: String) {
-    override def toString = s"commit $sha"
+    override def toString = s"{commit $sha: $message}"
   }
 
   val url = "https://api.github.com"
@@ -15,15 +15,17 @@ class GithubApi() {
     JSON.parseFull(source)
   }
 
+  private def getAs[T](option: Option[Any]): T = option.get.asInstanceOf[T]
+
   def getCommits(owner: String, repo: String): List[Commit] = {
     val json = parse(s"repos/$owner/$repo/commits")
 
-    json.get.asInstanceOf[List[Map[String, String]]].map { (item) =>
-      val sha = item.get("sha").get
-//      val commit = item.get("commit").asInstanceOf[Map[String, String]]
-//      val message = commit.get("message").get
+    json.get.asInstanceOf[List[Map[String, Any]]].map { (item) =>
+      val sha = getAs[String](item.get("sha"))
+      val commit = getAs[Map[String, Any]](item.get("commit"))
+      val message = getAs[String](commit.get("message"))
 
-      Commit(sha, "") //message)
+      Commit(sha, message)
     }
   }
 }
